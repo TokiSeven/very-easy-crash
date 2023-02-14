@@ -50,8 +50,7 @@ export namespace GameWSEvents {
       guessedNumber: number;
     }
 
-    export interface Reponse {
-      error: string | null;
-    }
+    // error if not empty
+    export type Response = string;
   }
 }

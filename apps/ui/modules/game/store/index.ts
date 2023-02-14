@@ -2,9 +2,11 @@ import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { playersSlice } from './slices/players';
 import { gameStateSlice } from './slices/game-state';
+import { reducer as toastrReducer } from 'react-redux-toastr';
 
 export const store = configureStore({
   reducer: {
+    toastr: toastrReducer,
     [playersSlice.name]: playersSlice.reducer,
     [gameStateSlice.name]: gameStateSlice.reducer,
   },

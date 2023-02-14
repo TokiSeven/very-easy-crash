@@ -49,7 +49,7 @@ export const onConnection = (socket: Socket, gameProvider: GameProvider) => {
       }
       try {
         await gameProvider.joinGame(player, +data.guessedNumber);
-        ack('ok');
+        ack(null);
       } catch (e) {
         ack(e.message);
       }

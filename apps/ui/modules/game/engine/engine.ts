@@ -1,4 +1,5 @@
 import { GameState, GameWSEvents } from '@splash-software-crash/contracts';
+import { toastr } from 'react-redux-toastr';
 import { io, Socket } from 'socket.io-client';
 import { store } from '../store';
 import { gameStateActions } from '../store/slices/game-state';
@@ -62,15 +63,17 @@ export class Engine {
       guessedNumber,
     };
     try {
-      const res: GameWSEvents.JoinGame.Reponse = await this.socket.emitWithAck(
+      const res: GameWSEvents.JoinGame.Response = await this.socket.emitWithAck(
         GameWSEvents.JoinGame.event,
         data
       );
-      console.log(res);
-      // alert('ok');
+      if (res) {
+        toastr.error('Game', res);
+      } else {
+        toastr.success('Game', 'Joined');
+      }
     } catch (e) {
-      console.error(e);
-      // alert(e.message);
+      toastr.error('Game', e?.message || 'Undefined behavior');
     }
   }
 }
