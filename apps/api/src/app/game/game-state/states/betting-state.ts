@@ -3,6 +3,7 @@ import { UserEntity, UserPlay } from '../../../user/user.entity';
 import { AbstractState } from '../abstract-state';
 import { GameEntity } from '../../game.entity';
 import { log } from 'console';
+import { GameState } from '@splash-software-crash/contracts';
 
 export class BettingState extends AbstractState {
   private pendingBets = 0;
@@ -11,7 +12,20 @@ export class BettingState extends AbstractState {
   private minUsersToPlay = 5;
 
   init() {
+    const bots: UserEntity[] = new Array(4).fill(0).map((v, i) => ({
+      id: `id-${i}`,
+      name: `bot #${i + 1}`,
+      balance: 100,
+      plays: [],
+      guessedNumber: Math.floor(Math.random() * 1000) / 100,
+    }));
     this.context.setActiveGame(this.generateNewGame());
+    Promise.all(
+      bots.map((v) =>
+        this.bet(v, (v as UserEntity & { guessedNumber: number }).guessedNumber)
+      )
+    );
+    log(`done!`);
   }
 
   async bet(user: UserEntity, guessedNumber: number): Promise<void> {
@@ -27,7 +41,9 @@ export class BettingState extends AbstractState {
       };
       user.plays.push(play);
       this.joinedUsers++;
-      this.context.activeGame().plays.push(play);
+      this.context
+        .activeGame()
+        .plays.push({ ...play, user: { id: user.id, name: user.name } });
     } finally {
       this.pendingBets--;
     }
@@ -43,5 +59,9 @@ export class BettingState extends AbstractState {
     game.plays = [];
     game.secretNumber = Math.floor(Math.random() * 1000) / 100;
     return game;
+  }
+
+  getState(): GameState {
+    return GameState.betting;
   }
 }

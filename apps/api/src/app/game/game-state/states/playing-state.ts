@@ -2,6 +2,7 @@ import { FinalizingGameState } from './finalizing-game-state';
 import { UserEntity } from '../../../user/user.entity';
 import { AbstractState } from '../abstract-state';
 import { log } from 'console';
+import { GameState } from '@splash-software-crash/contracts';
 
 export class PlayingState extends AbstractState {
   private tickPeriodMs = 100;
@@ -21,6 +22,7 @@ export class PlayingState extends AbstractState {
       this.context.activeGame().secretNumber,
       this.uiNumber
     );
+    this.context.emit('playing-tick');
     if (this.context.activeGame().secretNumber <= this.uiNumber) {
       log(`finalizing...`);
       this.context.setState(new FinalizingGameState());
@@ -32,5 +34,9 @@ export class PlayingState extends AbstractState {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   bet(user: UserEntity, guessedNumber: number): Promise<void> {
     throw new Error('Can not bet right now.');
+  }
+
+  getState(): GameState {
+    return GameState.playing;
   }
 }

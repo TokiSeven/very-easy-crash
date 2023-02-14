@@ -1,3 +1,4 @@
+import { GameState } from '@splash-software-crash/contracts';
 import { UserEntity } from '../../user/user.entity';
 import { Context } from './context';
 
@@ -12,4 +13,6 @@ export abstract class AbstractState {
   init() {}
 
   abstract bet(user: UserEntity, guessedNumber: number): Promise<void>;
+
+  abstract getState(): GameState;
 }
