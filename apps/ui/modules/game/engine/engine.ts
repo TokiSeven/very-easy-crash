@@ -55,4 +55,21 @@ export class Engine {
     this.socket.disconnect();
     this.socket = null;
   }
+
+  async bet(guessedNumber: number) {
+    const data: GameWSEvents.JoinGame.Request = {
+      guessedNumber,
+    };
+    try {
+      const res: GameWSEvents.JoinGame.Reponse = await this.socket.emitWithAck(
+        GameWSEvents.JoinGame.event,
+        data
+      );
+      console.log(res);
+      alert('ok');
+    } catch (e) {
+      console.error(e);
+      alert(e.message);
+    }
+  }
 }

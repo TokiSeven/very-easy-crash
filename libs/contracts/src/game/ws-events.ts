@@ -42,4 +42,16 @@ export namespace GameWSEvents {
       players: PlayerDTO[];
     }
   }
+
+  export namespace JoinGame {
+    export const event = 'join-game';
+
+    export interface Request {
+      guessedNumber: number;
+    }
+
+    export interface Reponse {
+      error: string | null;
+    }
+  }
 }

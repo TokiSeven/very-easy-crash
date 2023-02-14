@@ -1,3 +1,4 @@
+import { UserEntity } from '../user/user.entity';
 import { Context } from './game-state/context';
 
 export class GameProvider {
@@ -21,5 +22,9 @@ export class GameProvider {
 
   bindPlayingTick(callback: () => void) {
     this.ctx.on('playing-tick', callback);
+  }
+
+  joinGame(player: UserEntity, guessedNumber: number) {
+    return this.ctx.bet(player, guessedNumber);
   }
 }
