@@ -12,7 +12,7 @@ const initialState: {
 };
 
 export const gameStateSlice = createSlice({
-  name: 'players',
+  name: 'gameState',
   initialState,
   reducers: {
     setState(state, { payload }: PayloadAction<GameState>) {
