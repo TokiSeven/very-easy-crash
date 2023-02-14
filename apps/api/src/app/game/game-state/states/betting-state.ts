@@ -64,4 +64,8 @@ export class BettingState extends AbstractState {
   getState(): GameState {
     return GameState.betting;
   }
+
+  getUIRate(): number {
+    return 0.0;
+  }
 }

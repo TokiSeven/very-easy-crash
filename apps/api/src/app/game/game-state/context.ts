@@ -31,4 +31,8 @@ export class Context extends EventEmitter {
   bet(user: UserEntity, guessedNumber: number): Promise<void> {
     return this.state.bet(user, guessedNumber);
   }
+
+  getUIRate() {
+    return this.state.getUIRate();
+  }
 }

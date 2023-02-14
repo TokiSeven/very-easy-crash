@@ -9,22 +9,28 @@ import { StateIsChanged } from './events/state-is-changed';
 
 export const onConnection = (socket: Socket, gameProvider: GameProvider) => {
   const player = new UserEntity();
-  player.id = '54';
+  player.id = 'id-5';
   player.balance = 10;
   player.name = 'RealUser';
   player.plays = [];
 
   new GameJoined(gameProvider).emitTo(socket);
 
+  const events = {
+    stateIsChanged: new StateIsChanged(gameProvider),
+    finalizingState: new FinalizingState(gameProvider),
+    playingTick: new PlayingTick(gameProvider),
+  };
+
   gameProvider.bindStateChanged(() => {
-    new StateIsChanged(gameProvider).emitTo(socket);
+    events.stateIsChanged.emitTo(socket);
     if (gameProvider.getState() === GameState.finalizing) {
-      new FinalizingState(gameProvider).emitTo(socket);
+      events.finalizingState.emitTo(socket);
     }
   });
 
   gameProvider.bindPlayingTick(() => {
-    new PlayingTick(gameProvider).emitTo(socket);
+    events.playingTick.emitTo(socket);
   });
 
   socket.on(

@@ -29,4 +29,8 @@ export class FinalizingGameState extends AbstractState {
   getState(): GameState {
     return GameState.finalizing;
   }
+
+  getUIRate(): number {
+    return this.context.activeGame().latestRate;
+  }
 }

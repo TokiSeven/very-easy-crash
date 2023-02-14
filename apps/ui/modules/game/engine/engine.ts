@@ -35,6 +35,7 @@ export class Engine {
     this.socket.on(
       GameWSEvents.PlayingStateTick.event,
       (payload: GameWSEvents.PlayingStateTick.Payload) => {
+        console.log('tik tik tik', payload);
         store.dispatch(gameStateActions.setRate(payload.rate));
         store.dispatch(gameStateActions.setState(payload.state));
         store.dispatch(playersActions.setPlayers(payload.players));
@@ -66,10 +67,10 @@ export class Engine {
         data
       );
       console.log(res);
-      alert('ok');
+      // alert('ok');
     } catch (e) {
       console.error(e);
-      alert(e.message);
+      // alert(e.message);
     }
   }
 }

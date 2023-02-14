@@ -8,6 +8,10 @@ export class GameProvider {
     return this.ctx.getGameState();
   }
 
+  getUIRate() {
+    return this.ctx.getUIRate();
+  }
+
   getPlays() {
     return this.ctx.activeGame().plays;
   }
@@ -20,7 +24,7 @@ export class GameProvider {
     this.ctx.on('state-changed', callback);
   }
 
-  bindPlayingTick(callback: () => void) {
+  bindPlayingTick(callback: (uiNumber: number) => void) {
     this.ctx.on('playing-tick', callback);
   }
 

@@ -15,4 +15,6 @@ export abstract class AbstractState {
   abstract bet(user: UserEntity, guessedNumber: number): Promise<void>;
 
   abstract getState(): GameState;
+
+  abstract getUIRate(): number;
 }

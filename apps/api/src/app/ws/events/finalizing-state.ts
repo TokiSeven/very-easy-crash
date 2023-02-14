@@ -7,7 +7,7 @@ export class FinalizingState extends WSEvent {
   async payload(): Promise<GameWSEvents.FinalizingState.Payload> {
     return {
       state: this.provider.getState(),
-      rate: 1.5,
+      rate: this.provider.getUIRate(),
       players: this.provider.getPlays().map((v) => ({
         id: v.user.id,
         name: v.user.name,

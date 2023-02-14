@@ -1,4 +1,5 @@
 import { GameWSEvents } from '@splash-software-crash/contracts';
+import { GameProvider } from '../../game/provider';
 import { WSEvent } from '../ws-event';
 
 export class PlayingTick extends WSEvent {
@@ -7,7 +8,7 @@ export class PlayingTick extends WSEvent {
   async payload(): Promise<GameWSEvents.PlayingStateTick.Payload> {
     return {
       state: this.provider.getState(),
-      rate: 1.5,
+      rate: this.provider.getUIRate(),
       players: this.provider.getPlays().map((v) => ({
         id: v.user.id,
         name: v.user.name,

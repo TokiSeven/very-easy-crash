@@ -22,6 +22,7 @@ export class PlayingState extends AbstractState {
       this.context.activeGame().secretNumber,
       this.uiNumber
     );
+    this.context.activeGame().latestRate = this.uiNumber;
     this.context.emit('playing-tick');
     if (this.context.activeGame().secretNumber <= this.uiNumber) {
       log(`finalizing...`);
@@ -38,5 +39,9 @@ export class PlayingState extends AbstractState {
 
   getState(): GameState {
     return GameState.playing;
+  }
+
+  getUIRate(): number {
+    return this.uiNumber;
   }
 }
