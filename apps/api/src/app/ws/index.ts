@@ -35,19 +35,23 @@ export const onConnection = (socket: Socket, gameProvider: GameProvider) => {
 
   socket.on(
     GameWSEvents.JoinGame.event,
-    (data: GameWSEvents.JoinGame.Request, ack) => {
+    async (data: GameWSEvents.JoinGame.Request, ack) => {
       if (!ack || typeof ack !== 'function') {
         console.warn('ack is not a function');
         return;
       }
-      if (!data.guessedNumber || Number.isNaN(+data.guessedNumber)) {
+      if (
+        !data.guessedNumber ||
+        Number.isNaN(+data.guessedNumber) ||
+        +data.guessedNumber < 1
+      ) {
         return ack('Provide correct guessed number');
       }
       try {
-        gameProvider.joinGame(player, +data.guessedNumber);
+        await gameProvider.joinGame(player, +data.guessedNumber);
         ack('ok');
       } catch (e) {
-        ack(e);
+        ack(e.message);
       }
     }
   );
