@@ -24,11 +24,22 @@ export class PlayingState extends AbstractState {
     );
     this.context.activeGame().latestRate = this.uiNumber;
     this.context.emit('playing-tick');
+    this.updatePlayers();
     if (this.context.activeGame().secretNumber <= this.uiNumber) {
       log(`finalizing...`);
       this.context.setState(new FinalizingGameState());
     } else {
       setTimeout(this.tick.bind(this), this.tickPeriodMs);
+    }
+  }
+
+  updatePlayers() {
+    for (const play of this.context.activeGame().plays) {
+      if (play.cashout) {
+        continue;
+      }
+      const won = play.guessedNumber <= this.context.activeGame().latestRate;
+      play.cashout = won ? play.bet * play.guessedNumber : 0;
     }
   }
 
