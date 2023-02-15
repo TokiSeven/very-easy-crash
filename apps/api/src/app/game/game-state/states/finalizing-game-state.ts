@@ -28,6 +28,7 @@ export class FinalizingGameState extends AbstractState {
     }
     log(this.context.activeGame().plays);
     log(`betting...`);
+    this.context.activeGame().ended = true;
     await this.context.activeGame().save();
   }
 

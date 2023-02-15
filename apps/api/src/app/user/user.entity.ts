@@ -2,7 +2,7 @@ import { BaseEntity, Column, Entity, ObjectIdColumn } from 'typeorm';
 
 export class UserPlay {
   constructor(
-    gameId: string,
+    gameId: number,
     guessedNumber: number,
     bet: number,
     cashout: number | null,
@@ -20,7 +20,7 @@ export class UserPlay {
   }
 
   @Column()
-  gameId: string;
+  gameId: number;
 
   @Column()
   guessedNumber: number;

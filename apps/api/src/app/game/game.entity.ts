@@ -1,10 +1,4 @@
-import {
-  BaseEntity,
-  Column,
-  Entity,
-  ObjectIdColumn,
-  PrimaryColumn,
-} from 'typeorm';
+import { BaseEntity, Column, Entity, ObjectIdColumn } from 'typeorm';
 import { UserPlay } from '../user/user.entity';
 
 @Entity()
@@ -13,13 +7,16 @@ export class GameEntity extends BaseEntity {
   _id: string;
 
   @Column()
-  id: string;
+  id: number;
 
   @Column()
   secretNumber: number;
 
   @Column()
   latestRate: number;
+
+  @Column()
+  ended: boolean;
 
   @Column((type) => UserPlay)
   plays: UserPlay[];

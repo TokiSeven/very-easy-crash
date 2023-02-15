@@ -23,7 +23,7 @@ ds.initialize()
     const server = app.listen(port, async () => {
       console.log(`Listening at http://localhost:${port}/api`);
       const ctx = new Context();
-      ctx.setState(new BettingState());
+      await ctx.setState(new BettingState());
       const wsServer = new WSServer(server, {
         cors: { origin: 'http://localhost:4200' },
       });

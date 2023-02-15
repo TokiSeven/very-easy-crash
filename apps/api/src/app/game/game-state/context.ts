@@ -11,11 +11,11 @@ export class Context extends EventEmitter {
 
   private players = new Set<UserEntity>();
 
-  setState(state: AbstractState) {
+  async setState(state: AbstractState) {
     this.emit('state-changed');
     this.state = state;
     this.state.setContext(this);
-    this.state.init();
+    await this.state.init();
   }
 
   getGameState() {

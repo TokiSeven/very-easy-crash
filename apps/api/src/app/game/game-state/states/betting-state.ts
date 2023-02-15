@@ -61,16 +61,21 @@ export class BettingState extends AbstractState {
     }
     if (!this.pendingBets && this.joinedUsers >= this.minUsersToPlay) {
       log(`playing!`);
-      this.context.setState(new PlayingState());
+      await this.context.setState(new PlayingState());
     }
   }
 
   async generateNewGame(): Promise<GameEntity> {
-    const game = new GameEntity();
-    game.plays = [];
-    game.secretNumber = Math.floor(Math.random() * 1000) / 100;
-    game.latestRate = 0;
-    await game.save();
+    let game = await GameEntity.findOne({ where: { ended: false } });
+    if (!game) {
+      game = new GameEntity();
+      game.id = (this.context.activeGame()?.id || 0) + 1;
+      game.plays = [];
+      game.secretNumber = Math.floor(Math.random() * 1000) / 100;
+      game.latestRate = 0;
+      game.ended = false;
+      await game.save();
+    }
     return game;
   }
 
