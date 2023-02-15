@@ -1,6 +1,34 @@
-
-
 # SplashSoftwareCrash
+
+## how to run
+
+1. up docker-compose.yml file
+2. create database with name 'test'
+3. type `npm i`
+4. type in first terminal `nx run ui:serve`
+5. type in second terminal `nx run api:serve`
+6. visit UI by addr `http://localhost:4200/`
+7. type a number inside an input & click `Bet`
+
+## structure
+
+- apps/api - backend with websockets
+  - main - entry point to the app
+  - app - main folder with application
+    - user - contains just user entity
+    - ws - websocket integration only
+    - game - logic related to game
+      - game-state - state pattern - contains diff classes inside which does the finate automata's work
+      - entity - database entity
+      - provider - exporter from game module (provider of the some things from the module - some kinda of bridge between ws & game logic)
+- apps/ui - next.js app (ui) with a game
+  - modules - entry point to game module (page)
+    - components - visual part
+    - engine - small websocket logic built in singletone pattern
+    - store - reduxjs/toolkit for state manager
+- libs/contracts - interfaces between api & ui
+
+# NX GENERATED READ.ME
 
 This project was generated using [Nx](https://nx.dev).
 
@@ -78,8 +106,6 @@ Run `nx graph` to see a diagram of the dependencies of your projects.
 ## Further help
 
 Visit the [Nx Documentation](https://nx.dev) to learn more.
-
-
 
 ## ☁ Nx Cloud
 
