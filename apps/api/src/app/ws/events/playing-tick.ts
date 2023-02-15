@@ -1,5 +1,4 @@
 import { GameWSEvents } from '@splash-software-crash/contracts';
-import { GameProvider } from '../../game/provider';
 import { WSEvent } from '../ws-event';
 
 export class PlayingTick extends WSEvent {

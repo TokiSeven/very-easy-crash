@@ -1,10 +1,9 @@
-import { PlayingState } from './playing-state';
-import { UserEntity, UserPlay } from '../../../user/user.entity';
-import { AbstractState } from '../abstract-state';
-import { GameEntity } from '../../game.entity';
-import { log } from 'console';
 import { GameState } from '@splash-software-crash/contracts';
-import { ds } from '../../../../ds';
+import { log } from 'console';
+import { UserEntity, UserPlay } from '../../../user/user.entity';
+import { GameEntity } from '../../game.entity';
+import { AbstractState } from '../abstract-state';
+import { PlayingState } from './playing-state';
 
 export class BettingState extends AbstractState {
   private pendingBets = 0;
@@ -53,13 +52,7 @@ export class BettingState extends AbstractState {
         user.name
       );
       user.plays.push(play);
-      // await ds.manager.update(
-      //   UserEntity,
-      //   { _id: user._id },
-      //   { balance: user.balance }
-      // );
       await user.save();
-      // await ds.manager.save(UserEntity, user);
       this.joinedUsers++;
       this.context.activeGame().plays.push(play);
       this.context.pushPlayer(user);
@@ -73,12 +66,11 @@ export class BettingState extends AbstractState {
   }
 
   async generateNewGame(): Promise<GameEntity> {
-    let game = new GameEntity();
+    const game = new GameEntity();
     game.plays = [];
     game.secretNumber = Math.floor(Math.random() * 1000) / 100;
     game.latestRate = 0;
     await game.save();
-    // await ds.manager.save(game);
     return game;
   }
 

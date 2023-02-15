@@ -1,10 +1,4 @@
-import {
-  Entity,
-  ObjectIdColumn,
-  Column,
-  PrimaryColumn,
-  BaseEntity,
-} from 'typeorm';
+import { BaseEntity, Column, Entity, ObjectIdColumn } from 'typeorm';
 
 export class UserPlay {
   constructor(

@@ -1,6 +1,5 @@
 import { GameState, GameWSEvents } from '@splash-software-crash/contracts';
 import { Socket } from 'socket.io';
-import { ds } from '../../ds';
 import { GameProvider } from '../game/provider';
 import { UserEntity } from '../user/user.entity';
 import { FinalizingState } from './events/finalizing-state';
