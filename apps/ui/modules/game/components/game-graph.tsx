@@ -6,7 +6,7 @@ let offsetX = 0;
 let isFirstTouch = true;
 
 export const GameGraph: FC = () => {
-  const { rate } = useAppSelector((s) => s.gameState);
+  const { rate, secretNumber } = useAppSelector((s) => s.gameState);
   useEffect(() => {
     const canvas = document.getElementById('game') as HTMLCanvasElement;
     if (canvas) {
@@ -36,6 +36,19 @@ export const GameGraph: FC = () => {
       offsetX = 0;
     }
   }, [rate]);
+  if (secretNumber) {
+    return (
+      <Layout>
+        <Center>
+          <div>Secret Number was</div>
+          <div>{secretNumber}</div>
+          <hr />
+          <div>While Rate is</div>
+          <div>{rate}</div>
+        </Center>
+      </Layout>
+    );
+  }
   return (
     <Layout>
       {!!rate && <Canvas id="game"></Canvas>}
@@ -61,4 +74,8 @@ const Rate = styled.div`
 const Canvas = styled.canvas`
   height: 100%;
   width: 100%;
+`;
+
+const Center = styled.div`
+  text-align: center;
 `;
