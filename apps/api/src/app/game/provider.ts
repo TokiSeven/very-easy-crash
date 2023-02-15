@@ -24,8 +24,12 @@ export class GameProvider {
     this.ctx.on('state-changed', callback);
   }
 
-  bindPlayingTick(callback: (uiNumber: number) => void) {
+  bindPlayingTick(callback: () => void) {
     this.ctx.on('playing-tick', callback);
+  }
+
+  bindInit(callback: () => void) {
+    this.ctx.on('init', callback);
   }
 
   joinGame(player: UserEntity, guessedNumber: number) {

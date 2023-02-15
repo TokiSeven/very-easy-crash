@@ -22,13 +22,14 @@ export const onConnection = async (
     // await ds.manager.save(player);
   }
 
-  new GameJoined(gameProvider).emitTo(socket);
-
   const events = {
     stateIsChanged: new StateIsChanged(gameProvider),
     finalizingState: new FinalizingState(gameProvider),
     playingTick: new PlayingTick(gameProvider),
+    init: new GameJoined(gameProvider),
   };
+
+  events.init.emitTo(socket);
 
   gameProvider.bindStateChanged(() => {
     events.stateIsChanged.emitTo(socket);
@@ -39,6 +40,10 @@ export const onConnection = async (
 
   gameProvider.bindPlayingTick(() => {
     events.playingTick.emitTo(socket);
+  });
+
+  gameProvider.bindInit(() => {
+    events.init.emitTo(socket);
   });
 
   socket.on(

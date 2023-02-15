@@ -21,6 +21,7 @@ export class BettingState extends AbstractState {
     );
     this.context.setActiveGame(await this.generateNewGame());
     await Promise.all(bots.map((v) => this.bet(v.user, v.guessedNumber)));
+    this.context.emit('init')
   }
 
   async findOrCreateBot(index: number) {
