@@ -8,9 +8,8 @@ export class FinalizingGameState extends AbstractState {
   init() {
     this.cashoutPlays();
     setTimeout(() => {
-      console.log('tick!LKWSDLKAJDSLKADLKJ');
       this.context.setState(new BettingState());
-    }, 5000);
+    }, 10000);
   }
 
   async cashoutPlays() {
