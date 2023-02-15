@@ -9,6 +9,8 @@ export class Context extends EventEmitter {
 
   private game: GameEntity;
 
+  private players = new Set<UserEntity>();
+
   setState(state: AbstractState) {
     this.emit('state-changed');
     this.state = state;
@@ -34,5 +36,17 @@ export class Context extends EventEmitter {
 
   getUIRate() {
     return this.state.getUIRate();
+  }
+
+  getPlayers() {
+    return Array.from(this.players.values());
+  }
+
+  pushPlayer(user: UserEntity) {
+    this.players.add(user);
+  }
+
+  clearPlayers() {
+    this.players.clear();
   }
 }

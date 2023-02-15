@@ -1,5 +1,6 @@
 import { GameState, GameWSEvents } from '@splash-software-crash/contracts';
 import { Socket } from 'socket.io';
+import { ds } from '../../ds';
 import { GameProvider } from '../game/provider';
 import { UserEntity } from '../user/user.entity';
 import { FinalizingState } from './events/finalizing-state';
@@ -7,12 +8,20 @@ import { GameJoined } from './events/game-joined';
 import { PlayingTick } from './events/playing-tick';
 import { StateIsChanged } from './events/state-is-changed';
 
-export const onConnection = (socket: Socket, gameProvider: GameProvider) => {
-  const player = new UserEntity();
-  player.id = 'id-5';
-  player.balance = 10;
-  player.name = 'RealUser';
-  player.plays = [];
+export const onConnection = async (
+  socket: Socket,
+  gameProvider: GameProvider
+) => {
+  let player = await UserEntity.findOne({ where: { id: '5' } });
+  if (!player) {
+    player = new UserEntity();
+    player.id = '5';
+    player.balance = 100;
+    player.name = 'RealUser';
+    player.plays = [];
+    await player.save();
+    // await ds.manager.save(player);
+  }
 
   new GameJoined(gameProvider).emitTo(socket);
 

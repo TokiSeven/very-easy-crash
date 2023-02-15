@@ -9,8 +9,8 @@ export class FinalizingState extends WSEvent {
       state: this.provider.getState(),
       rate: this.provider.getUIRate(),
       players: this.provider.getPlays().map((v) => ({
-        id: v.user.id,
-        name: v.user.name,
+        id: v.userId.toString(),
+        name: v.userName,
         bet: v.bet,
         guessedNumber: v.guessedNumber,
         cashout: v.cashout === null ? null : v.cashout,
